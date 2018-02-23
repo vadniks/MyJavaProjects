@@ -28,7 +28,7 @@ public class NotesMain extends Application implements IConstants {
     private static ObservableList<String> listData;
     private static Label notAnyLb;
     static HashMap<String, String> hashMap = new HashMap<>();
-    private Scene scene;
+    private static ListView<String> list;
 
     /**
      *Describes the arrangement of the window,
@@ -44,7 +44,7 @@ public class NotesMain extends Application implements IConstants {
         primaryStage.setTitle(TITLE_MAIN);
         primaryStage.setResizable(false);
         mainOwner = primaryStage;
-        scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
         window(root);
         primaryStage.show();
@@ -73,7 +73,7 @@ public class NotesMain extends Application implements IConstants {
         listData = FXCollections.observableArrayList();
         listData.addAll(notesNames);
 
-        ListView<String> list = new ListView<>(listData);
+        list = new ListView<>(listData);
         list.setEditable(false);
 
         MultipleSelectionModel<String> listSelModel = list.getSelectionModel();
@@ -89,8 +89,10 @@ public class NotesMain extends Application implements IConstants {
         btClear.setText(BT_CLEAR_LIST);
         btClear.setPrefSize(W_BT_DEF, H_BT_DEF);
         btClear.setOnAction(event -> {
-            listSelModel.clearSelection();
-            NotesNoteView.close();
+            if (!notesNames.isEmpty() && listSelModel.getSelectedItem() != null) {
+                listSelModel.clearSelection();
+                NotesNoteView.close();
+            }
         });
 
         BorderPane btsPane = new BorderPane();
@@ -104,10 +106,17 @@ public class NotesMain extends Application implements IConstants {
     }
 
     /**
-     * Updates the label {@code notAnyLb}.
+     * Updates the label when note was created {@code notAnyLb}.
      */
     static void updateLabel() {
         notAnyLb.setText("");
+    }
+
+    /**
+     * Updates the label when note was deleted {@code notAnyLb}.
+     */
+    static void updateLabel2() {
+        notAnyLb.setText(NOT_ANY_LB);
     }
 
     /**
@@ -116,12 +125,13 @@ public class NotesMain extends Application implements IConstants {
     static void outerUpdateList() {
         listData.clear();
         listData.addAll(notesNames);
+        list.setItems(listData);
     }
 
     /**
      * Main method updates array list {@code listData} by reading xml using method readXml {@code readXml()} file that contains notes.
      */
-    private static void updateList() {
+    static void updateList() {
         isNotAny = false;
         HashMap map = XmlProcessing.readXml();
         Set<Map.Entry<String, String>> set = map.entrySet();

@@ -82,11 +82,14 @@ public class NotesCreateNote implements IConstants{
                 newNoteText = textText.getText();
                 XmlProcessing.createNote(newNoteName, newNoteText);
                 NotesMain.mainOwner.hide();
-                NotesMain.outerUpdateList();
                 NotesMain.isNotAny = false;
                 NotesMain.updateLabel();
+                NotesMain.outerUpdateList();
                 primaryStage.close();
                 NotesMain.mainOwner.close();
+                NotesMain.updateList();
+                NotesMain.outerUpdateList();
+                NotesMain.mainOwner.show();
             }
         });
 

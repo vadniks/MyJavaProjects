@@ -68,8 +68,12 @@ public class NotesNoteView implements IConstants{
             NotesMain.notesNames.remove(newValue);
             XmlProcessing.resetCount();
             XmlProcessing.deleteNote(delValue+XmlProcessing.getCount());
-            close();
             NotesMain.mainOwner.close();
+            NotesMain.updateLabel2();
+            NotesMain.updateList();
+            NotesMain.outerUpdateList();
+            close();
+            NotesMain.mainOwner.show();
         });
 
         root.setTop(nameLb);
