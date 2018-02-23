@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--                     Example                   -->
+<notes>
+    <service id="0">0</service>
+    <note>
+        <name>name</name>
+        <text>text</text>
+    </note>
+</notes>
