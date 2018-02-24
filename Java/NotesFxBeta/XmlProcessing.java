@@ -162,6 +162,13 @@ public class XmlProcessing {
         }
     }
 
+    /**
+     * Edits notes.
+     *
+     * @param name name of the note.
+     * @param text text of the note.
+     * @param item id of the note that needs to be edited.
+     */
     static void editNote(String name, String text, int item) {
         Node node = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
         rootN.removeChild(node);
@@ -171,10 +178,6 @@ public class XmlProcessing {
         } catch (TransformerConfigurationException ex) {
             ex.printStackTrace();
         }
-
-//        Node edt = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
-//        NodeList edtList = edt.getChildNodes();
-//        System.out.println(edtList.item(0).getNodeName());
     }
 
     /**
