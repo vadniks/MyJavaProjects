@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -29,6 +30,9 @@ public class NotesMain extends Application implements IConstants {
     private static Label notAnyLb;
     static HashMap<String, String> hashMap = new HashMap<>();
     private static ListView<String> list;
+    private static final String F_SEP = System.getProperty("file.separator");
+    private static final String ICON = "notes.png";
+    private static final String ICON_PATH = "." + F_SEP + "Assets" + F_SEP + ICON;
 
     /**
      *Describes the arrangement of the window,
@@ -44,6 +48,7 @@ public class NotesMain extends Application implements IConstants {
         primaryStage.setTitle(TITLE_MAIN);
         primaryStage.setResizable(false);
         mainOwner = primaryStage;
+        NotesMain.mainOwner.getIcons().add(new Image(NotesMain.class.getResourceAsStream("notes.png")));
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
         window(root);
