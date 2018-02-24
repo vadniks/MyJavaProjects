@@ -17,6 +17,8 @@ public class NotesNoteView implements IConstants{
     private static Stage primaryStage;
     private String newValue;
     static int delValue;
+    private TextArea textArea;
+    static int editValue;
 
     /**
      * Class constructor, creates a window.
@@ -57,27 +59,47 @@ public class NotesNoteView implements IConstants{
         nameLb.setFont(NotesMain.font);
         nameLb.setText(nameFinal);
 
-        TextArea textArea = new TextArea();
+        textArea = new TextArea();
         textArea.setWrapText(true);
-        textArea.setEditable(false);
+        textArea.setEditable(true);
         textArea.setText(NotesMain.hashMap.get(newValue));
 
         Button btDelete = new Button(BT_DELETE);
-        btDelete.setPrefSize(WIDTH, H_BT_DEF);
+        btDelete.setPrefSize(W_BT_DEF, H_BT_DEF);
         btDelete.setOnAction(event -> {
             NotesMain.notesNames.remove(newValue);
             XmlProcessing.resetCount();
             XmlProcessing.deleteNote(delValue+XmlProcessing.getCount());
             NotesMain.mainOwner.close();
-            NotesMain.updateLabel2();
             NotesMain.updateList();
             NotesMain.outerUpdateList();
+            if (NotesMain.notesNames.isEmpty())
+                NotesMain.updateLabel2();
             close();
             NotesMain.mainOwner.show();
         });
 
+        Button btEdit = new Button(BT_EDIT);
+        btEdit.setPrefSize(W_BT_DEF, H_BT_DEF);
+        btEdit.setOnAction(event -> {
+            if (textArea.getText() != null && !textArea.getText().isEmpty()) {
+                XmlProcessing.resetCount();
+                XmlProcessing.editNote(newValue , textArea.getText(), editValue+XmlProcessing.getCount());
+                NotesMain.mainOwner.close();
+                NotesMain.updateList();
+                NotesMain.outerUpdateList();
+                close();
+                NotesMain.mainOwner.show();
+            }
+        });
+
+        BorderPane btsPane = new BorderPane();
+        btsPane.setPrefSize(WIDTH, H_BT_DEF);
+        btsPane.setLeft(btDelete);
+        btsPane.setRight(btEdit);
+
         root.setTop(nameLb);
         root.setCenter(textArea);
-        root.setBottom(btDelete);
+        root.setBottom(btsPane);
     }
 }

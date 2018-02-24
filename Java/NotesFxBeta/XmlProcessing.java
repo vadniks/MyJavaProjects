@@ -162,6 +162,21 @@ public class XmlProcessing {
         }
     }
 
+    static void editNote(String name, String text, int item) {
+        Node node = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
+        rootN.removeChild(node);
+        createNote(name, text);
+        try {
+            writeDocument();
+        } catch (TransformerConfigurationException ex) {
+            ex.printStackTrace();
+        }
+
+//        Node edt = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
+//        NodeList edtList = edt.getChildNodes();
+//        System.out.println(edtList.item(0).getNodeName());
+    }
+
     /**
      * Creates a note.
      *

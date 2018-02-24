@@ -35,4 +35,5 @@ public interface IConstants {
     String NOT_ANY_LB = "You haven't any notes yet!";
     String TITLE_VIEW = "View: ";
     String BT_DELETE = "Delete note";
+    String BT_EDIT = "Edit note";
 }

@@ -37,7 +37,7 @@ public class NotesMain extends Application implements IConstants {
      * @param primaryStage is JavaFx component that is needed to be overrided.
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         new XmlProcessing();
         updateList();
         BorderPane root = new BorderPane();
@@ -79,6 +79,7 @@ public class NotesMain extends Application implements IConstants {
         MultipleSelectionModel<String> listSelModel = list.getSelectionModel();
         listSelModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> new NotesNoteView(newValue));
         listSelModel.selectedIndexProperty().addListener((observable, oldValue, newValue) -> NotesNoteView.delValue = (int) newValue);
+        listSelModel.selectedIndexProperty().addListener((observable, oldValue, newValue) -> NotesNoteView.editValue = (int) newValue);
 
         Button btCreate = new Button();
         btCreate.setText(BT_CREATE);
