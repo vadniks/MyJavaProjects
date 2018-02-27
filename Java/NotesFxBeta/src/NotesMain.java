@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -30,9 +31,6 @@ public class NotesMain extends Application implements IConstants {
     private static Label notAnyLb;
     static HashMap<String, String> hashMap = new HashMap<>();
     private static ListView<String> list;
-    private static final String F_SEP = System.getProperty("file.separator");
-    private static final String ICON = "notes.png";
-    private static final String ICON_PATH = "." + F_SEP + "Assets" + F_SEP + ICON;
 
     /**
      *Describes the arrangement of the window,
@@ -53,6 +51,8 @@ public class NotesMain extends Application implements IConstants {
         primaryStage.setScene(scene);
         window(root);
         primaryStage.show();
+        Platform.setImplicitExit(false);
+        NotifyProcessing.tray();
     }
 
     /**

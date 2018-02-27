@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  * @version 1.0 dated Feb 14, 2018
  */
 public class NotesCreateNote implements IConstants{
-    private Stage primaryStage;
+    static Stage primaryStage;
     private String newNoteName = "";
     private String newNoteText = "";
 
@@ -67,14 +67,14 @@ public class NotesCreateNote implements IConstants{
         textPane.setCenter(textText);
 
         Button btClear = new Button(BT_CLEAR);
-        btClear.setPrefSize(W_BT_DEF, H_BT_DEF-10);
+        btClear.setPrefSize(W_BT_3, H_BT_DEF-10);
         btClear.setOnAction(event -> {
             nameField.clear();
             textText.clear();
         });
 
         Button btDone = new Button(BT_DONE);
-        btDone.setPrefSize(W_BT_DEF, H_BT_DEF-10);
+        btDone.setPrefSize(W_BT_3, H_BT_DEF-10);
         btDone.setOnAction(event -> {
             if (nameField.getText() != null && !nameField.getText().isEmpty()
                     && textText.getText() != null && !textText.getText().isEmpty()) {
@@ -93,9 +93,18 @@ public class NotesCreateNote implements IConstants{
             }
         });
 
+        Button btDate = new Button(BT_DATE);
+        btDate.setPrefSize(W_BT_3, H_BT_DEF-10);
+        btDate.setOnAction(event -> {
+            if (nameField.getText() != null && !nameField.getText().isEmpty() &&
+                    textText.getText() != null && !textText.getText().isEmpty())
+                new NotifyProcessing(nameField.getText(), textText.getText());
+        });
+
         BorderPane btsPane = new BorderPane();
         btsPane.setLeft(btClear);
         btsPane.setRight(btDone);
+        btsPane.setCenter(btDate);
 
         root.setTop(namePane);
         root.setCenter(textPane);

@@ -48,7 +48,7 @@ public class NotesNoteView implements IConstants{
     }
 
     /**
-     *Describes the arrangement of the window,
+     * Describes the arrangement of the window,
      * overrides the interface {@code IConstants} method.
      *
      * @param root is a root pane.

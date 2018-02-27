@@ -27,6 +27,7 @@ public interface IConstants {
     String LABEL = "Your notes:";
     int W_BT_DEF = 175;
     int H_BT_DEF = 35;
+    int W_BT_3 = 116;
     String TITLE_CREATE = "Create note";
     String ENTER_NAME_LB = "Enter name:";
     String BT_DONE = "Done";
@@ -36,4 +37,9 @@ public interface IConstants {
     String TITLE_VIEW = "View: ";
     String BT_DELETE = "Delete note";
     String BT_EDIT = "Edit note";
+    String BT_DATE = "Set notify";
+    String TITLE_NOTIFY = "Set notify";
+    String SET_DATE_LB = "Set date for notification:";
+    String TF_DAY = "Set day";
+    String TF_MONTH = "Set month";
 }

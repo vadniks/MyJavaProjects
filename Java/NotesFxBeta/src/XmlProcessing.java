@@ -35,6 +35,7 @@ public class XmlProcessing {
     private static final String NAME_TAG = "name";
     private static final String TEXT_TAG = "text";
     private static final String XML_DEF_TEXT = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><notes><service id=\"0\">0</service></notes>";
+    private static final String DATE_TAG = "date";
 
     /**
      * Class constructor creates xml file,
@@ -173,6 +174,28 @@ public class XmlProcessing {
         Node node = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
         rootN.removeChild(node);
         createNote(name, text);
+        try {
+            writeDocument();
+        } catch (TransformerConfigurationException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    /**
+     * [DOESN'T USED], for the future.
+     *
+     * @param dateS date.
+     * @param item id of the note.
+     */
+    static void createDate(String dateS, int item) {
+        Node node = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
+
+        Element date = documentD.createElement(DATE_TAG);
+        date.setTextContent(dateS);
+
+        node.appendChild(date);
+
         try {
             writeDocument();
         } catch (TransformerConfigurationException ex) {
