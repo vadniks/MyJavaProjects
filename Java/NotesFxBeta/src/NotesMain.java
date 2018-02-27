@@ -4,11 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +56,8 @@ public class NotesMain extends Application implements IConstants {
         primaryStage.show();
         Platform.setImplicitExit(false);
         NotifyProcessing.tray();
+        primaryStage.setOnCloseRequest(event -> NotifyProcessing.trayIcon.displayMessage("Notes app is in tray.",
+                "Notes app continues working in the system tray.", TrayIcon.MessageType.INFO));
     }
 
     /**
@@ -68,7 +73,8 @@ public class NotesMain extends Application implements IConstants {
         font = new Font(25);
         label.setFont(font);
 
-        notAnyLb = new Label(NOT_ANY_LB);
+        notAnyLb = new Label();
+        notAnyLb.setText(NOT_ANY_LB);
 
         BorderPane lbPane = new BorderPane();
         lbPane.setLeft(label);

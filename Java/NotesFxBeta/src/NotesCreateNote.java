@@ -26,6 +26,7 @@ public class NotesCreateNote implements IConstants{
         BorderPane root = new BorderPane();
         primaryStage.setTitle(TITLE_CREATE);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new javafx.scene.image.Image(NotesMain.class.getResourceAsStream("notes.png")));
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initOwner(NotesMain.mainOwner);
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));

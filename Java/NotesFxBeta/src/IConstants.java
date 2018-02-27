@@ -40,6 +40,8 @@ public interface IConstants {
     String BT_DATE = "Set notify";
     String TITLE_NOTIFY = "Set notify";
     String SET_DATE_LB = "Set date for notification:";
-    String TF_DAY = "Set day";
-    String TF_MONTH = "Set month";
+    String DAY_LB = "Set day";
+    String MONTH_LB = "Set month";
+    String HOUR_LB = "Set hour";
+    String MINUTE_LB = "Set minute";
 }

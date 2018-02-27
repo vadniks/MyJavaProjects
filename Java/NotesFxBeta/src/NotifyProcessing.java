@@ -31,7 +31,7 @@ public class NotifyProcessing implements IConstants {
     private Stage primaryStage;
     private String nameT;
     private String textT;
-    private static TrayIcon trayIcon;
+    static TrayIcon trayIcon;
     private int newValueH;
     private int newValueMi;
 
@@ -45,6 +45,7 @@ public class NotifyProcessing implements IConstants {
         BorderPane root = new BorderPane();
         primaryStage.setTitle(TITLE_NOTIFY);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new javafx.scene.image.Image(NotesMain.class.getResourceAsStream("notes.png")));
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initOwner(NotesCreateNote.primaryStage);
         primaryStage.setScene(new Scene(root, WIDTH, H_BT_DEF*5));
@@ -63,6 +64,18 @@ public class NotifyProcessing implements IConstants {
         Label setDtLb = new Label();
         setDtLb.setText(SET_DATE_LB);
         setDtLb.setFont(NotesMain.font);
+
+        Label dayLb = new Label();
+        dayLb.setText(DAY_LB);
+
+        Label monthLb = new Label();
+        monthLb.setText(MONTH_LB);
+
+        Label hourLb = new Label();
+        hourLb.setText(HOUR_LB);
+
+        Label minuteLb = new Label();
+        minuteLb.setText(MINUTE_LB);
 
         ObservableList<Integer> days = FXCollections.observableArrayList();
         days.addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31);
@@ -117,6 +130,22 @@ public class NotifyProcessing implements IConstants {
             }
         });
 
+        BorderPane dateLbPane = new BorderPane();
+        dateLbPane.setLeft(dayLb);
+        dateLbPane.setRight(monthLb);
+
+        BorderPane timeLbPane = new BorderPane();
+        timeLbPane.setLeft(hourLb);
+        timeLbPane.setRight(minuteLb);
+
+        BorderPane dateTimeLbPane = new BorderPane();
+        dateTimeLbPane.setLeft(dateLbPane);
+        dateTimeLbPane.setRight(timeLbPane);
+
+        BorderPane lbsPane = new BorderPane();
+        lbsPane.setTop(setDtLb);
+        lbsPane.setBottom(dateTimeLbPane);
+
         BorderPane datePane = new BorderPane();
         datePane.setMaxSize(WIDTH, H_BT_DEF*3);
         datePane.setLeft(day);
@@ -130,7 +159,7 @@ public class NotifyProcessing implements IConstants {
         dateTimePane.setLeft(datePane);
         dateTimePane.setRight(timePane);
 
-        root.setTop(setDtLb);
+        root.setTop(lbsPane);
         root.setCenter(dateTimePane);
         root.setBottom(btDone);
     }
