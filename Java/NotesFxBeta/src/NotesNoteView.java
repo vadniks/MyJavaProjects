@@ -6,6 +6,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 /**
  * Class that is used to view the content of each note.
  *
@@ -91,7 +93,7 @@ public class NotesNoteView implements IConstants{
                 NotesMain.outerUpdateList();
                 close();
                 NotesMain.mainOwner.show();
-            }
+            } else Toolkit.getDefaultToolkit().beep();
         });
 
         BorderPane btsPane = new BorderPane();

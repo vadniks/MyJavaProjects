@@ -1,11 +1,13 @@
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  * Creates notes.
@@ -42,29 +44,22 @@ public class NotesCreateNote implements IConstants{
      */
     @Override
     public void window(BorderPane root) {
-        Label enterNameLb = new Label();
-        enterNameLb.setFont(NotesMain.font);
-        enterNameLb.setText(ENTER_NAME_LB);
-        enterNameLb.setPrefSize(W_BT_DEF-20, H_BT_DEF);
-
         TextField nameField = new TextField();
-        nameField.setPrefSize(W_BT_DEF+20, H_BT_DEF);
+        nameField.setPrefSize(WIDTH, H_BT_DEF);
+        nameField.setPromptText("Name of note");
+        nameField.setTooltip(new Tooltip("name of note"));
 
         BorderPane namePane = new BorderPane();
         namePane.setPrefSize(WIDTH, H_BT_DEF);
-        namePane.setLeft(enterNameLb);
         namePane.setRight(nameField);
-
-        Label enterTextLb = new Label();
-        enterTextLb.setFont(NotesMain.font);
-        enterTextLb.setText(ENTER_TEXT_LB);
 
         TextArea textText = new TextArea();
         textText.setWrapText(true);
         textText.setPrefSize(WIDTH, HEIGHT-45);
+        textText.setPromptText("Text of note");
+        textText.setTooltip(new Tooltip("text of note"));
 
         BorderPane textPane = new BorderPane();
-        textPane.setTop(enterTextLb);
         textPane.setCenter(textText);
 
         Button btClear = new Button(BT_CLEAR);
@@ -91,7 +86,7 @@ public class NotesCreateNote implements IConstants{
                 NotesMain.updateList();
                 NotesMain.outerUpdateList();
                 NotesMain.mainOwner.show();
-            }
+            } else Toolkit.getDefaultToolkit().beep();
         });
 
         Button btDate = new Button(BT_DATE);
@@ -100,6 +95,7 @@ public class NotesCreateNote implements IConstants{
             if (nameField.getText() != null && !nameField.getText().isEmpty() &&
                     textText.getText() != null && !textText.getText().isEmpty())
                 new NotifyProcessing(nameField.getText(), textText.getText());
+            else Toolkit.getDefaultToolkit().beep();
         });
 
         BorderPane btsPane = new BorderPane();

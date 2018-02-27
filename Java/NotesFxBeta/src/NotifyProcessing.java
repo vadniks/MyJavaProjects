@@ -48,7 +48,7 @@ public class NotifyProcessing implements IConstants {
         primaryStage.getIcons().add(new javafx.scene.image.Image(NotesMain.class.getResourceAsStream("notes.png")));
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initOwner(NotesCreateNote.primaryStage);
-        primaryStage.setScene(new Scene(root, WIDTH, H_BT_DEF*5));
+        primaryStage.setScene(new Scene(root));
         window(root);
         primaryStage.show();
     }
@@ -61,10 +61,6 @@ public class NotifyProcessing implements IConstants {
      */
     @Override
     public void window(BorderPane root) {
-        Label setDtLb = new Label();
-        setDtLb.setText(SET_DATE_LB);
-        setDtLb.setFont(NotesMain.font);
-
         Label dayLb = new Label();
         dayLb.setText(DAY_LB);
 
@@ -95,15 +91,19 @@ public class NotifyProcessing implements IConstants {
 
         ChoiceBox<Integer> day = new ChoiceBox<>();
         day.setItems(days);
+        day.setPrefWidth(54.5);
 
         ChoiceBox<Integer> month = new ChoiceBox<>();
         month.setItems(months);
+        month.setPrefWidth(54.5);
 
         ChoiceBox<Integer> hour = new ChoiceBox<>();
         hour.setItems(hours);
+        hour.setPrefWidth(54.5);
 
         ChoiceBox<Integer> minute = new ChoiceBox<>();
         minute.setItems(minutes);
+        minute.setPrefWidth(54.5);
 
         SingleSelectionModel<Integer> daySelModel = day.getSelectionModel();
         daySelModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> newValueD = newValue);
@@ -118,16 +118,16 @@ public class NotifyProcessing implements IConstants {
         minuteSelModel.selectedItemProperty().addListener(((observable, oldValue, newValue) -> newValueMi = newValue));
 
         Button btDone = new Button(BT_DONE);
-        btDone.setPrefSize(WIDTH, H_BT_DEF);
+        btDone.setPrefSize(W_BT_DEF+43, H_BT_DEF-8);
         btDone.setOnAction(event -> {
-            if (newValueD != 0 && newValueM != 0) {
+            if (newValueD != 0 && newValueM != 0 && newValueH != 0 && newValueMi != 0) {
                 try {
                     createNotify();
                 } catch (ParseException ex) {
                     ex.printStackTrace();
                 }
                 primaryStage.close();
-            }
+            } else Toolkit.getDefaultToolkit().beep();
         });
 
         BorderPane dateLbPane = new BorderPane();
@@ -143,8 +143,7 @@ public class NotifyProcessing implements IConstants {
         dateTimeLbPane.setRight(timeLbPane);
 
         BorderPane lbsPane = new BorderPane();
-        lbsPane.setTop(setDtLb);
-        lbsPane.setBottom(dateTimeLbPane);
+        lbsPane.setCenter(dateTimeLbPane);
 
         BorderPane datePane = new BorderPane();
         datePane.setMaxSize(WIDTH, H_BT_DEF*3);
@@ -187,6 +186,7 @@ public class NotifyProcessing implements IConstants {
             @Override
             public void run() {
                 trayIcon.displayMessage("Notify: " + nameT, textT, TrayIcon.MessageType.INFO);
+                Toolkit.getDefaultToolkit().beep();
             }
         };
         Timer timer = new Timer();
