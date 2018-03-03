@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +44,6 @@ public class NotesMain extends Application implements IConstants {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        new XmlProcessing();
         updateList();
         BorderPane root = new BorderPane();
         primaryStage.setTitle(TITLE_MAIN);
@@ -56,7 +56,7 @@ public class NotesMain extends Application implements IConstants {
         primaryStage.show();
         Platform.setImplicitExit(false);
         NotifyProcessing.tray();
-        primaryStage.setOnCloseRequest(event -> NotifyProcessing.trayIcon.displayMessage("Notes app is in tray.",
+        primaryStage.setOnCloseRequest(event -> NotifyProcessing.trayIcon.displayMessage("Notes app minimized to tray.",
                 "Notes app continues working in the system tray.", TrayIcon.MessageType.INFO));
     }
 
@@ -175,6 +175,32 @@ public class NotesMain extends Application implements IConstants {
      * @param args is an array that contains symbols from the commandline if input is needed.
      */
     public static void main(String[] args) {
-        launch(args);
+        new XmlProcessing();
+        if (XmlProcessing.canRun()) {
+            XmlProcessing.setRunFlagToFalse();
+            checkExiting();
+            launch(args);
+        } else {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null,
+                    "You can't run this application twice!",
+                    "Notes",
+                    JOptionPane.WARNING_MESSAGE);
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Checks the exiting flag (is program needs to be exited).
+     */
+    private static void checkExiting() {
+        Thread main = Thread.currentThread();
+
+        new Thread(() -> {
+            while (main.isAlive()) {
+                if (NotifyProcessing.isExiting)
+                    XmlProcessing.setRunFlagToTrue();
+            }
+        }).start();
     }
 }

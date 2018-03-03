@@ -34,7 +34,7 @@ public class XmlProcessing {
     private static final String SERVICE_TAG = "service";
     private static final String NAME_TAG = "name";
     private static final String TEXT_TAG = "text";
-    private static final String XML_DEF_TEXT = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><notes><service id=\"0\">0</service></notes>";
+    private static final String XML_DEF_TEXT = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><notes><service id=\"0\">0</service><service id=\"1\">true</service></notes>";
     private static final String DATE_TAG = "date";
 
     /**
@@ -78,7 +78,7 @@ public class XmlProcessing {
                 for (int j = 0; j < notesProps.getLength(); j++) {
                     Node noteProp = notesProps.item(j);
 
-                    if (note.getNodeName().equals(SERVICE_TAG))
+                    if (note.getNodeName().equals(SERVICE_TAG) && note.getAttributes().item(0).getTextContent().equals("0"))
                         s = Integer.parseInt(note.getTextContent());
 
                     if (noteProp.getNodeType() != Node.TEXT_NODE) {
@@ -95,6 +95,71 @@ public class XmlProcessing {
     }
 
     /**
+     * Checks whether program can run.
+     *
+     * @return true if program can run, otherwise returns false.
+     */
+    static boolean canRun() {
+        String s = null;
+        NodeList nodes = rootN.getChildNodes();
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+
+            if (node.getNodeName().equals(SERVICE_TAG) && node.getAttributes().item(0).getTextContent().equals("1"))
+                s = node.getTextContent();
+        }
+
+        return Boolean.valueOf(s);
+    }
+
+    /**
+     * Sets the canRun flag {@code canRun()} to false.
+     */
+    static void setRunFlagToFalse() {
+        if (canRun()) {
+            NodeList nodes = rootN.getChildNodes();
+
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Node node = nodes.item(i);
+
+                if (node.getNodeName().equals(SERVICE_TAG) && node.getAttributes().item(0).getTextContent().equals("1")) {
+                    node.setTextContent("false");
+                }
+            }
+
+            try {
+                writeDocument();
+            } catch (TransformerConfigurationException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Sets the canRun flag {@code canRun()} to true.
+     */
+    static void setRunFlagToTrue() {
+        if (!canRun()) {
+            NodeList nodes = rootN.getChildNodes();
+
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Node node = nodes.item(i);
+
+                if (node.getNodeName().equals(SERVICE_TAG) && node.getAttributes().item(0).getTextContent().equals("1")) {
+                    node.setTextContent("true");
+                }
+            }
+
+            try {
+                writeDocument();
+            } catch (TransformerConfigurationException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Method counts the number for the param to be correctly placed into hash map correctly.
      *
      * @return value produced by the method.
@@ -106,7 +171,7 @@ public class XmlProcessing {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
 
-            if (node.getNodeName().equals(SERVICE_TAG))
+            if (node.getNodeName().equals(SERVICE_TAG) && node.getAttributes().item(0).getTextContent().equals("0"))
                 s = node.getTextContent();
         }
 
@@ -130,7 +195,7 @@ public class XmlProcessing {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
 
-            if (node.getNodeName().equals(SERVICE_TAG))
+            if (node.getNodeName().equals(SERVICE_TAG) && node.getAttributes().item(0).getTextContent().equals("0"))
                 s = Integer.parseInt(node.getTextContent());
         }
         return s;
@@ -181,13 +246,15 @@ public class XmlProcessing {
         }
     }
 
+    /* static void createDate(String dateS, int item) {} */
 
     /**
-     * [DOESN'T USED], for the future.
+     * [DOESN'T USED]
      *
      * @param dateS date.
      * @param item id of the note.
      */
+    @Deprecated(forRemoval = true)
     static void createDate(String dateS, int item) {
         Node node = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
 

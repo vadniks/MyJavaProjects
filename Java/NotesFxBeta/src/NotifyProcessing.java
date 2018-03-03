@@ -34,11 +34,14 @@ public class NotifyProcessing implements IConstants {
     static TrayIcon trayIcon;
     private int newValueH;
     private int newValueMi;
+    static boolean isExiting;
 
     /**
      * Class constructor, creates a window.
      */
     NotifyProcessing(String name, String text) {
+        isExiting = false;
+
         nameT = name;
         textT = text;
         primaryStage = new Stage();
@@ -202,7 +205,17 @@ public class NotifyProcessing implements IConstants {
             SystemTray tray = SystemTray.getSystemTray();
             Image image = Toolkit.getDefaultToolkit().getImage(NotesMain.class.getResource("notes.png"));
 
-            ActionListener exitListener = e -> System.exit(0);
+            ActionListener exitListener = e -> {
+                isExiting = true;
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                System.exit(0);
+            };
             PopupMenu popup = new PopupMenu();
             MenuItem defaultItem = new MenuItem("Exit");
             defaultItem.addActionListener(exitListener);
