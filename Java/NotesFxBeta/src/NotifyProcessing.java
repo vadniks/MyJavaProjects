@@ -1,20 +1,20 @@
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
+import java.awt.MenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +35,10 @@ public class NotifyProcessing implements IConstants {
     private int newValueH;
     private int newValueMi;
     static boolean isExiting;
+    private boolean day = false;
+    private boolean month = false;
+    private boolean hour = false;
+    private boolean minute = false;
 
     /**
      * Class constructor, creates a window.
@@ -64,66 +68,37 @@ public class NotifyProcessing implements IConstants {
      */
     @Override
     public void window(BorderPane root) {
-        Label dayLb = new Label();
-        dayLb.setText(DAY_LB);
+        Label tlLb = new Label();
+        tlLb.setFont(NotesMain.font);
+        tlLb.setText(TOOLTIP_LB);
 
-        Label monthLb = new Label();
-        monthLb.setText(MONTH_LB);
+        DatePicker datePicker = new DatePicker();
+        datePicker.setOnAction(event -> {
+            LocalDate lcDate = datePicker.getValue();
+            if (lcDate.toString().matches("([2][0]\\d\\d[-][0-1]\\d[-][0-3]\\d)")) {
+                newValueD = lcDate.getDayOfMonth();
+                day = true;
+                newValueM = lcDate.getMonth().getValue();
+                month = true;
+            }
+        });
 
-        Label hourLb = new Label();
-        hourLb.setText(HOUR_LB);
-
-        Label minuteLb = new Label();
-        minuteLb.setText(MINUTE_LB);
-
-        ObservableList<Integer> days = FXCollections.observableArrayList();
-        days.addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31);
-
-        ObservableList<Integer> months = FXCollections.observableArrayList();
-        months.addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-
-        ObservableList<Integer> hours = FXCollections.observableArrayList();
-        for (int i = 1; i < 24; i++) {
-            hours.add(i);
-        }
-
-        ObservableList<Integer> minutes = FXCollections.observableArrayList();
-        for (int i = 0; i < 60; i++) {
-            minutes.add(i);
-        }
-
-        ChoiceBox<Integer> day = new ChoiceBox<>();
-        day.setItems(days);
-        day.setPrefWidth(54.5);
-
-        ChoiceBox<Integer> month = new ChoiceBox<>();
-        month.setItems(months);
-        month.setPrefWidth(54.5);
-
-        ChoiceBox<Integer> hour = new ChoiceBox<>();
-        hour.setItems(hours);
-        hour.setPrefWidth(54.5);
-
-        ChoiceBox<Integer> minute = new ChoiceBox<>();
-        minute.setItems(minutes);
-        minute.setPrefWidth(54.5);
-
-        SingleSelectionModel<Integer> daySelModel = day.getSelectionModel();
-        daySelModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> newValueD = newValue);
-
-        SingleSelectionModel<Integer> monthSelModel = month.getSelectionModel();
-        monthSelModel.selectedItemProperty().addListener(((observable, oldValue, newValue) -> newValueM = newValue));
-
-        SingleSelectionModel<Integer> hourSelModel = hour.getSelectionModel();
-        hourSelModel.selectedItemProperty().addListener(((observable, oldValue, newValue) -> newValueH = newValue));
-
-        SingleSelectionModel<Integer> minuteSelModel = minute.getSelectionModel();
-        minuteSelModel.selectedItemProperty().addListener(((observable, oldValue, newValue) -> newValueMi = newValue));
+        TextField timeFl = new TextField();
+        timeFl.setPromptText(TF_TM_FORMAT);
+        timeFl.setTooltip(new Tooltip(TF_TOOLTIP));
+        timeFl.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("([0-23]\\d[-][0-59]\\d)")) {
+                newValueH = Integer.parseInt(newValue.split("-")[0]);
+                hour = true;
+                newValueMi = Integer.parseInt(newValue.split("-")[1]);
+                minute = true;
+            }
+        });
 
         Button btDone = new Button(BT_DONE);
-        btDone.setPrefSize(W_BT_DEF+43, H_BT_DEF-8);
+        btDone.setPrefSize(W_BT_DEF+135, H_BT_DEF-8);
         btDone.setOnAction(event -> {
-            if (newValueD != 0 && newValueM != 0 && newValueH != 0 && newValueMi != 0) {
+            if (day && month && hour && minute) {
                 try {
                     createNotify();
                 } catch (ParseException ex) {
@@ -133,35 +108,11 @@ public class NotifyProcessing implements IConstants {
             } else Toolkit.getDefaultToolkit().beep();
         });
 
-        BorderPane dateLbPane = new BorderPane();
-        dateLbPane.setLeft(dayLb);
-        dateLbPane.setRight(monthLb);
-
-        BorderPane timeLbPane = new BorderPane();
-        timeLbPane.setLeft(hourLb);
-        timeLbPane.setRight(minuteLb);
-
-        BorderPane dateTimeLbPane = new BorderPane();
-        dateTimeLbPane.setLeft(dateLbPane);
-        dateTimeLbPane.setRight(timeLbPane);
-
-        BorderPane lbsPane = new BorderPane();
-        lbsPane.setCenter(dateTimeLbPane);
-
-        BorderPane datePane = new BorderPane();
-        datePane.setMaxSize(WIDTH, H_BT_DEF*3);
-        datePane.setLeft(day);
-        datePane.setRight(month);
-
-        BorderPane timePane = new BorderPane();
-        timePane.setLeft(hour);
-        timePane.setRight(minute);
-
         BorderPane dateTimePane = new BorderPane();
-        dateTimePane.setLeft(datePane);
-        dateTimePane.setRight(timePane);
+        dateTimePane.setLeft(datePicker);
+        dateTimePane.setRight(timeFl);
 
-        root.setTop(lbsPane);
+        root.setTop(tlLb);
         root.setCenter(dateTimePane);
         root.setBottom(btDone);
     }
@@ -173,8 +124,6 @@ public class NotifyProcessing implements IConstants {
      * @throws ParseException just not to handle this exception.
      */
     private void createNotify() throws ParseException {
-        //XmlProcessing.createDate(date, XmlProcessing.getCount()); // <-- For the future.
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, newValueD);
         if (newValueM == 1)

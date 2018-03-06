@@ -37,8 +37,7 @@ public interface IConstants {
     String BT_EDIT = "Edit note";
     String BT_DATE = "Set notify";
     String TITLE_NOTIFY = "Set notify";
-    String DAY_LB = "  Set day  ";
-    String MONTH_LB = "Set month ";
-    String HOUR_LB = "Set hour ";
-    String MINUTE_LB = "Set minute";
+    String TF_TM_FORMAT = "12-00";
+    String TF_TOOLTIP = "Set time";
+    String TOOLTIP_LB = "           Set datetime:";
 }

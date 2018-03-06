@@ -246,30 +246,6 @@ public class XmlProcessing {
         }
     }
 
-    /* static void createDate(String dateS, int item) {} */
-
-    /**
-     * [DOESN'T USED]
-     *
-     * @param dateS date.
-     * @param item id of the note.
-     */
-    @Deprecated(forRemoval = true)
-    static void createDate(String dateS, int item) {
-        Node node = documentD.getDocumentElement().getElementsByTagName(NOTE_TAG).item(item);
-
-        Element date = documentD.createElement(DATE_TAG);
-        date.setTextContent(dateS);
-
-        node.appendChild(date);
-
-        try {
-            writeDocument();
-        } catch (TransformerConfigurationException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     /**
      * Creates a note.
      *
