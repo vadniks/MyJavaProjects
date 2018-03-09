@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- ====================Example================== -->
+<notes><!-- Xml doc root element. -->
+    <service id="0">0</service><!-- Notes count. -->
+    <service id="1">true</service><!-- Tray icon fuse. -->
+    <note><!-- Note root element, for each note. -->
+        <name>name</name><!-- Name of note. -->
+        <text>text</text><!-- Text of note. -->
+    </note>
+</notes>
