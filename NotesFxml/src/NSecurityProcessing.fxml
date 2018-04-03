@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="200.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SecurityPCtrl">
+   <children>
+      <Label layoutX="121.0" layoutY="14.0" text="Authorization">
+         <font>
+            <Font name="Times New Roman" size="24.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passField" layoutX="81.0" layoutY="75.0" prefHeight="25.0" prefWidth="214.0" promptText="Enter password" />
+      <Button fx:id="btEnter" layoutX="141.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Enter">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="wRLb" layoutX="82.0" layoutY="111.0" text="Wrong password!" textFill="RED" />
+   </children>
+</AnchorPane>

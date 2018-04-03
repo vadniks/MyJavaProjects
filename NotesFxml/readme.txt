@@ -1,0 +1,1 @@
+Specialy commited as Intellij IDEA project.

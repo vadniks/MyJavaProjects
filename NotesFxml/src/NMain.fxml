@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainCtrl">
+   <children>
+      <ListView fx:id="listView" layoutX="25.0" layoutY="38.0" prefHeight="400.0" prefWidth="325.0" />
+      <Button fx:id="btCreate" layoutX="6.0" layoutY="444.0" mnemonicParsing="false" text="Create note" />
+      <Button fx:id="btSettings" layoutX="100.0" layoutY="444.0" mnemonicParsing="false" text="Settings" />
+      <Button fx:id="btClear" layoutX="176.0" layoutY="444.0" mnemonicParsing="false" text="Clear" />
+      <Hyperlink fx:id="href" alignment="CENTER" layoutX="307.0" layoutY="445.0" prefHeight="23.0" prefWidth="59.0" text="About" />
+      <Label alignment="CENTER" layoutY="2.0" prefHeight="17.0" prefWidth="375.0" text="Notes:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="checkbox" layoutX="264.0" layoutY="11.0" mnemonicParsing="false" text="Sort by date" />
+      <Button fx:id="btDelAll" layoutX="230.0" layoutY="444.0" mnemonicParsing="false" text="Delete all" />
+      <Button fx:id="btExit" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" text="Exit" />
+   </children>
+</AnchorPane>
