@@ -1,1 +1,13 @@
-Specialy commited as Intellij IDEA project.
+Uses libraries:
+com_zsoltfabok_sqlite_dialect_1_0
+commons_codec_1_11
+javax_activation_1_2_0
+javax_persistence_2_0_0
+jaxb_api_2_3_0
+jaxb_core_2_3_0
+jaxb_impl_2_3_0
+log4j_log4j_1_2_17
+org_hibernate_hibernate_core_5_2_12_Final
+org_hibernate_hibernate_entitymanager_5_2_12_Final
+org_projectlombok_lombok_1_16_20
+org_xerial_sqlite_jdbc_3_21_0
