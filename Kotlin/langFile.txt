@@ -1,0 +1,20 @@
+$x=9 #this is variable#
+$y=true
+("groupOfStudents"
+    ("student10" 10 false) #comment#
+    ("student9" $x true)
+    ("student14" #this is function that makes sum of two args# @pls[$x,5] $y)
+
+    ("subgroup0"
+        $z=16
+        ("student15" @mns[$z,1] $y)
+        ("student16" $z false)
+    )
+
+    ("someMetaDataWhichIsSomehowRelatedToStudentsOrTheirGroups"
+        (1 2 3 4 5 @pls[1,5] @mns[8,1] @mns[$x,1] $x)
+        (false $y)
+    )
+
+    #some other elements#
+)
