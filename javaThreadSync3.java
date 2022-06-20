@@ -55,10 +55,10 @@ public class A {
     }
     
     synchronized void d(final int i, final char j, final int k) {
-	    wt(i);
-	    pr("\n" + j + ' ');
-	    fr(i);
-	    d = k;
-	    notifyAll();
+        wt(i);
+        pr("\n" + j + ' ');
+        fr(i);
+        d = k;
+        notifyAll();
     }
 }
